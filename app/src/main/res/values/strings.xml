@@ -1,0 +1,16 @@
+<resources>
+    <!-- Generic -->
+    <string name="app_name">Art Gallery</string>
+    <string name="main_menu_title">The Roger Dean Art Collection</string>
+    <string name="main_menu_label">Select an image for a detailed view</string>
+    <string name="painting_description">Double tap the image to zoom in</string>
+
+    <!-- Paintings -->
+    <string name="morning_dragon">Morning Dragon • 2004</string>
+    <string name="tales_from_oceans">Tales From Topographic Oceans • 2003</string>
+    <string name="yessongs_arrival">Yessongs Arrival • 1973</string>
+    <string name="badger">Badger • 2003</string>
+    <string name="yessongs_escape">Yessongs Escape • 1973</string>
+    <string name="offshoot">Offshoot • 2000</string>
+    <string name="shadowland">Shadowland • 2003</string>
+</resources>
