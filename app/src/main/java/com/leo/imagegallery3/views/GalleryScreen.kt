@@ -1,3 +1,6 @@
+package com.leo.imagegallery3.views
+
+import Painting
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -69,7 +72,7 @@ fun GalleryScreen(
             modifier = Modifier
                 .size(88.dp)
                 .clickable {
-                    navController.popBackStack() // Navigate back to the previous screen
+                    navController.navigate("main_menu")
                 }
                 .align(Alignment.TopEnd)
                 .padding(top = 32.dp)
