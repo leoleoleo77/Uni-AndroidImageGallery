@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Wipe all database data an repopulate it for the sake of simplicity/testing
+        // Wipe all database data and repopulate it for the sake of simplicity/testing
         // In a real scenario I wouldn't design it like this, obviously :-)
         val db = GalleryDatabase(this).deleteAllData().populate()
         val paintingsList = db.getAllPaintings()
