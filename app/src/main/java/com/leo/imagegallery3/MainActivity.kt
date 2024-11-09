@@ -1,47 +1,27 @@
 package com.leo.imagegallery3
 
-import com.leo.imagegallery3.views.GalleryScreen
-import Painting
-import PaintingPreferences
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.leo.imagegallery3.ui.theme.ImageGalleryTheme
+import com.leo.imagegallery3.utils.GalleryDatabase
+import com.leo.imagegallery3.views.GalleryScreen
 import com.leo.imagegallery3.views.HomeScreen
-import com.leo.imagegallery3.views.PreviewButton
 
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val paintingPreferences = PaintingPreferences(this)
-        paintingPreferences.savePaintingsData(paintingPreferences.getPaintingsData())
+        // Wipe all database data an repopulate it for the sake of simplicity/testing
+        // In a real scenario I wouldn't design it like this, obviously :-)
+        val db = GalleryDatabase(this).deleteAllData().populate()
+        val paintingsList = db.getAllPaintings()
 
         enableEdgeToEdge()
         setContent {
@@ -53,7 +33,7 @@ class MainActivity : ComponentActivity() {
             ) {
                 composable(route = "home_screen") {
                     HomeScreen(
-                        paintingPreferences.getPaintingsData(),
+                        paintingsList,
                         navController
                     )
                 }
@@ -65,7 +45,7 @@ class MainActivity : ComponentActivity() {
                     paintingIndex?.let {
                         GalleryScreen(
                             it,
-                            paintingPreferences.getPaintingsData(),
+                            paintingsList,
                             navController
                         )
                     }

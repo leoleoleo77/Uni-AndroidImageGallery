@@ -1,6 +1,5 @@
 package com.leo.imagegallery3.views
 
-import Painting
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,14 +21,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.leo.imagegallery3.R
+import com.leo.imagegallery3.utils.Painting
 
 @Composable
 fun GalleryScreen(
@@ -37,10 +40,14 @@ fun GalleryScreen(
     paintings: List<Painting>,
     navController: NavController
 ) {
+    val thisPainting = getPaintingFromId(pId, paintings) ?: return // TODO: handle error state
+
+    val context = LocalContext.current
     var isZoomed by remember { mutableStateOf(false) }
     val scrollState = rememberScrollState()
     val imageModifier = Modifier
         .fillMaxWidth()
+        .semantics { contentDescription = thisPainting.description }
         .then(
             if (isZoomed) {
                 Modifier
@@ -76,6 +83,7 @@ fun GalleryScreen(
                 }
                 .align(Alignment.TopEnd)
                 .padding(top = 32.dp)
+                .semantics { contentDescription = context.getString(R.string.painting__detailed__view__close_semantics_label) },
         )
 
         Column (
@@ -91,7 +99,7 @@ fun GalleryScreen(
                         bottom = 12.dp,
                         start = 8.dp
                     ),
-                text = stringResource(id = paintings[pId].description),
+                text = thisPainting.title,
                 style = TextStyle(
                     color = Color.White,
                     fontSize = 16.sp,
@@ -115,10 +123,22 @@ fun GalleryScreen(
         }
 
         Image(
-            painter = painterResource(id = paintings[pId].image),
-            contentDescription = null,
+            painter = painterResource(id = thisPainting.imageResourceId),
+            contentDescription = thisPainting.description,
             contentScale = if (isZoomed) ContentScale.FillHeight else ContentScale.FillWidth,
             modifier = imageModifier,
         )
     }
+}
+
+private fun getPaintingFromId(
+    id: Int,
+    paintingsList: List<Painting>
+) : Painting? {
+    for (painting in paintingsList) {
+        if (painting.id == id) {
+            return painting
+        }
+    }
+    return null
 }

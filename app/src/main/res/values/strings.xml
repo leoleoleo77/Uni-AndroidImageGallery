@@ -4,6 +4,8 @@
     <string name="main_menu_title">The Roger Dean Art Collection</string>
     <string name="main_menu_label">Select an image for a detailed view</string>
     <string name="painting_description">Double tap the image to zoom in</string>
+    <string name="preview__image__semantics_label">Tap on this image to view the painting</string>
+    <string name="painting__detailed__view__close_semantics_label">Close painting detailed view, go back to home screen</string>
 
     <!-- Paintings -->
     <string name="morning_dragon">Morning Dragon • 2004</string>
@@ -13,4 +15,13 @@
     <string name="yessongs_escape">Yessongs Escape • 1973</string>
     <string name="offshoot">Offshoot • 2000</string>
     <string name="shadowland">Shadowland • 2003</string>
+
+    <!-- Painting descriptions -->
+    <string name="morning_dragon_label">A dragon with butterfly wings</string>
+    <string name="tales_from_oceans_label">Odd fishes in a peculiar ocean</string>
+    <string name="yessongs_arrival_label">An old fish resting on a mushroom</string>
+    <string name="badger_label">Two badgers under a tree</string>
+    <string name="yessongs_escape_label">A spaceship in outer space</string>
+    <string name="offshoot_label">A lonely tree</string>
+    <string name="shadowland_label">A rocky view in the morning</string>
 </resources>

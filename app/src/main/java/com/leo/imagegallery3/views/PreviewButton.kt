@@ -1,6 +1,6 @@
 package com.leo.imagegallery3.views
 
-import Painting
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.layout.Box
@@ -16,19 +16,23 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import com.leo.imagegallery3.R
+import com.leo.imagegallery3.utils.Painting
 
 @Composable
 fun PreviewButton(
-    paintingIndex: Int,
     painting: Painting,
     navController: androidx.navigation.NavController
 ) {
-    // Get the screen height for the percentage calculation
+
     val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp.dp
+    val context = LocalContext.current
 
     Box(
         modifier = Modifier
@@ -39,8 +43,8 @@ fun PreviewButton(
     ) {
         // Background Image
         Image(
-            painter = painterResource(id = painting.image), // Reference your image resource
-            contentDescription = stringResource(id = painting.description),
+            painter = painterResource(id = painting.imageResourceId),
+            contentDescription = getContentDescription(context, painting.title),
             contentScale = ContentScale.Crop, // Make the image fill the box (cropped if necessary)
             modifier = Modifier
                 .fillMaxSize() // Make the image fill the entire button area
@@ -49,13 +53,21 @@ fun PreviewButton(
         // Button overlay
         Button(
             onClick = {
-                navController.navigate("gallery_view/$paintingIndex")
+                navController.navigate("gallery_view/${painting.id}")
             },
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxSize()
+                .semantics { contentDescription = getContentDescription(context, painting.title) },
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent), // Transparent background
             elevation = ButtonDefaults.elevatedButtonElevation(0.dp) // No shadow to make it flat
         ) {}
     }
+}
+
+private fun getContentDescription(
+    context: Context,
+    title: String
+) : String {
+    return "${context.getString(R.string.preview__image__semantics_label)} $title"
 }

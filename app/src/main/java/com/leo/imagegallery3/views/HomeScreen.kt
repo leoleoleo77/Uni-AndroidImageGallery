@@ -1,6 +1,5 @@
 package com.leo.imagegallery3.views
 
-import Painting
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.leo.imagegallery3.R
+import com.leo.imagegallery3.utils.Painting
 
 @Composable
 fun HomeScreen(
@@ -49,9 +49,8 @@ private fun GetPreviewButtons(
     paintings: List<Painting>,
     navController: NavController
 ) {
-    for ((index, painting) in paintings.withIndex()) {
+    for (painting in paintings) {
         PreviewButton(
-            paintingIndex = index,
             painting = painting,
             navController = navController
         )
