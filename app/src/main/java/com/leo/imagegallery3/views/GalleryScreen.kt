@@ -72,7 +72,7 @@ fun GalleryScreen(
             modifier = Modifier
                 .size(88.dp)
                 .clickable {
-                    navController.navigate("main_menu")
+                    navController.navigate("home_screen")
                 }
                 .align(Alignment.TopEnd)
                 .padding(top = 32.dp)
